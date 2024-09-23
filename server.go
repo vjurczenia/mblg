@@ -62,7 +62,7 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.GET("/", index)
 	r.Use(cors.Default())
+	r.GET("/", index)
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
