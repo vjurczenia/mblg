@@ -6,7 +6,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
+	"github.com/gin-contrib/cache"
+	"github.com/gin-contrib/cache/persistence"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -62,7 +65,10 @@ func main() {
 	}
 
 	r := gin.Default()
+	store := persistence.NewInMemoryStore(time.Minute)
 	r.Use(cors.Default())
-	r.GET("/", index)
+
+	r.GET("/", cache.CachePage(store, 1*time.Second, index))
+
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
