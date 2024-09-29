@@ -58,7 +58,7 @@ func index(c *gin.Context) {
 
 func keepAwakeOnRender() {
 	for {
-		http.Get("https://mblg.onrender.com")
+		http.Get("https://mblg.onrender.com/ping")
 		time.Sleep(60 * time.Second)
 	}
 }
@@ -78,6 +78,9 @@ func main() {
 	r.Use(cors.Default())
 
 	r.GET("/", cache.CachePage(store, 1*time.Second, index))
+	r.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
