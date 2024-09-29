@@ -56,6 +56,13 @@ func index(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+func keepAwakeOnRender() {
+	for {
+		http.Get("https://mblg.onrender.com")
+		time.Sleep(60 * time.Second)
+	}
+}
+
 func main() {
 	if _, err := os.Stat(".env"); err == nil {
 		err := godotenv.Load()
@@ -63,6 +70,8 @@ func main() {
 			log.Fatal("Error loading .env file")
 		}
 	}
+
+	go keepAwakeOnRender()
 
 	r := gin.Default()
 	store := persistence.NewInMemoryStore(time.Minute)
