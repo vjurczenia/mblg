@@ -48,7 +48,7 @@
 
 <script>
     // Fetch the Google Sheets data
-    fetch("/data/")
+    fetch("data/")
         .then(response => response.json())
         .then(data => {
             displayMPosts(data.values);
