@@ -48,7 +48,7 @@
 
 <script>
     // Fetch the Google Sheets data
-    fetch("https://mblg.onrender.com")
+    fetch("/data/")
         .then(response => response.json())
         .then(data => {
             displayMPosts(data.values);
